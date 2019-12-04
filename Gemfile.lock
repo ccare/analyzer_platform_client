@@ -1,0 +1,14 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rbczmq (1.7.9)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  rbczmq
+
+BUNDLED WITH
+   2.0.2
