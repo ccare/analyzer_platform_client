@@ -48,7 +48,7 @@ class PlatformConnection
       return {
         "status"=> {
             "status_code" => 102,
-            "message" => "Malformed response",
+            "message" => "Missing response",
             "error" => "Response was nil"
           }
         }
@@ -61,12 +61,11 @@ class PlatformConnection
       puts e.backtrace
       {
         "status" => {
-          "status_code" => 102,
+          "status_code" => 103,
           "message" => "Malformed response",
           "error" => "Response was not valid JSON. Got #{response}"
         }
       }
     end
   end
-
 end
