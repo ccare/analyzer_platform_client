@@ -86,4 +86,19 @@ raise "error" unless result["status"]["status_code"] == 200
 
 pp result
 
+
+msg = {
+  action: "test_solution",
+  track_slug: "ruby",
+  container_version: "git-da694960c8c8d5c27c50885966a4301c050ce83a",
+  id: "_myid",
+  exercise_slug: "two-fer",
+  s3_uri: "s3://exercism-submissions/production/submissions/96"
+}
+
+result = exchange(msg.to_json)
+raise "error" unless result["status"]["status_code"] == 200
+
+pp result
+
 puts "done"
