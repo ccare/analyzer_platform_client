@@ -26,12 +26,18 @@ def exchange(msg, timeout=10000)
   response
 end
 
-# DEPLOY new version
-msg = {
-  action: :deploy_container_version,
-  track_slug: "ruby",
-  channel: "test_runners",
-  new_version: "git-da694960c8c8d5c27c50885966a4301c050ce83a"
-}
-result = exchange(msg.to_json)
-raise "error" unless result["status"]["status_code"] == 200
+def deploy_test_runner(languge_slug, version)
+  msg = {
+    action: :deploy_container_version,
+    track_slug: languge_slug,
+    channel: "test_runners",
+    new_version: version
+  }
+  result = exchange(msg.to_json)
+  raise "error" unless result["status"]["status_code"] == 200
+end
+
+deploy_test_runner("rust", "git-91aca5f26365595d76bf60b114a6eeefc3d416a5")
+deploy_test_runner("csharp", "git-6e7b53c8572dd9475a2108726022952b9de50fde")
+deploy_test_runner("elixir", "git-a8c7b8e5c1881792c4169e816c7b737b2ba7305c")
+deploy_test_runner("python", "git-777031cbe192bbc567fd5b5253db4b0545621e6c")

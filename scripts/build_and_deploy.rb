@@ -7,6 +7,7 @@ require_relative "../lib/platform_connection.rb"
 @context = PlatformClientContext.new
 @socket = @context.open_socket
 @socket.connect("tcp://localhost:5555")
+@socket.connect("tcp://52.48.43.253:5555")
 
 def exchange(msg, timeout=10000)
   response = @socket.send_msg(msg, timeout)
@@ -26,26 +27,35 @@ def exchange(msg, timeout=10000)
   response
 end
 
-msg = {
+def build_and_deploy(languge_slug, sha)
+
+  msg = {
     action: :build_container,
-    track_slug: "ruby",
+    track_slug: languge_slug,
     channel: "test_runners",
-    git_reference: "1ef422fca87a7dd83fb87e2e60eb662db43d2bb6"
-    # "da694960c8c8d5c27c50885966a4301c050ce83a" #"d88564f01727e76f3ddea93714bdf2ea45abef86"
-    # git_reference: "039f2842cabcfdc66f7f96573144e8eb255ec6e1" #bd8a0a593fa647c5bdd366080fc1e20c1bda7cb9
+    git_reference: sha
   }
+  result = exchange(msg.to_json, 300_000)
+  raise "error" unless result["status"]["status_code"] == 200
 
-result = exchange(msg.to_json, 300_000)
-raise "error" unless result["status"]["status_code"] == 200
-
-msg = {
+  msg = {
     action: :build_container,
-    track_slug: "elixir",
+    track_slug: languge_slug,
     channel: "test_runners",
-    git_reference: "master"
-    # "da694960c8c8d5c27c50885966a4301c050ce83a" #"d88564f01727e76f3ddea93714bdf2ea45abef86"
-    # git_reference: "039f2842cabcfdc66f7f96573144e8eb255ec6e1" #bd8a0a593fa647c5bdd366080fc1e20c1bda7cb9
+    git_reference: sha
   }
+  result = exchange(msg.to_json, 300_000)
+  raise "error" unless result["status"]["status_code"] == 200
 
-result = exchange(msg.to_json, 300_000)
-raise "error" unless result["status"]["status_code"] == 200
+  msg = {
+    action: :deploy_container_version,
+    track_slug: languge_slug,
+    channel: "test_runners",
+    new_version: "git-#{sha}"
+  }
+  result = exchange(msg.to_json, 300_000)
+  raise "error" unless result["status"]["status_code"] == 200
+end
+
+
+build_and_deploy("javascript", "d5402c2f9e1d4b01517675680fa21201c9344f91")
