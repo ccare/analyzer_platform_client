@@ -57,4 +57,5 @@ def build_and_deploy(languge_slug, sha)
 end
 
 
-build_and_deploy("javascript", "d5402c2f9e1d4b01517675680fa21201c9344f91")
+build_and_deploy("ruby", "41285e7491989b9dd334e29be29d0c1c120dd866")
+build_and_deploy("csharp", "362fbce95ffcc0f14a6531394788f1c54ca08bb0")

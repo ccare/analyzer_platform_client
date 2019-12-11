@@ -7,6 +7,7 @@ require_relative "../lib/platform_connection.rb"
 @context = PlatformClientContext.new
 @socket = @context.open_socket
 @socket.connect("tcp://localhost:5555")
+# @socket.connect("tcp://52.48.43.253:5555")
 
 def exchange(msg)
   response = @socket.send_msg(msg, 10000)
