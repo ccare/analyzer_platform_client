@@ -37,7 +37,7 @@ end
 msg = {
   action: "test_solution",
   track_slug: "csharp",
-  container_version: "git-362fbce95ffcc0f14a6531394788f1c54ca08bb0",
+  container_version: "git-723ed358cd07f19062c3b48889fca9d8a2784b7c",
   id: "_myid",
   exercise_slug: "csharp-1-b",
   s3_uri: "s3://exercism-submissions/production/testing/4b6535a2-079c-413a-a8ed-adbee54e77b7",
